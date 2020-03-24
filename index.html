@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Weather App Fee</title>
+    <link rel="stylesheet" href="src/styles.css" class="css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/da4c0c4f75.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container rounded p-5 shadow-lg mt-5">
+      <div class="row first">
+        <div class="col-6">
+          <form id="location_form">
+            <div class="input-group mb-3">
+              <input
+                id="location_input"
+                type="text"
+                class="form-control"
+                placeholder="Enter Location"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+              />
+              <div class="input-group-append" id="magnifying_glass">
+                <span class="input-group-text" id="basic-addon2">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-4 text-right">
+          <button
+            type="button"
+            class="btn btn-light btn-sm"
+            id="button_current_location"
+          >
+            Current Location
+          </button>
+        </div>
+        <div class="col-2 text-right large">
+          <span class="scale" id="tempScaleC">
+            <strong>ºC</strong>
+          </span>
+          <span>|</span>
+          <span class="scale" id="tempScaleF">ºF</span>
+        </div>
+      </div>
+      <hr />
+      <div class="row second pt-3 pb-3">
+        <div class="col">
+          <div class="date-time small" id="date_time">
+            Mon. 27/01/2020 <br />
+            11:11
+          </div>
+
+          <h1>
+            <span id="city">Rome</span> <span id="temp-digit">10</span>
+            <span class="degrees">ºC</span>
+          </h1>
+        </div>
+
+        <div class="col text-center">
+          <span class="big-icon">☀️</span>
+        </div>
+
+        <div class="col">
+          <div class="humidity small">Humidity: 62%</div>
+          <div class="precipitation small">Precipitation: 0%</div>
+          <div class="wind small">Wind: 10km/h</div>
+          <div class="mt-5">
+            <img
+              width="100px"
+              src="img/undraw_reading_0re1.svg"
+              alt="girl-reading"
+            />
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="row third text-center">
+        <div class="col">
+          TUE
+          <div class="weather-icon ">☀️</div>
+          <div class="small-temperature">7º|12º</div>
+        </div>
+        <div class="col">
+          WED
+          <div class="weather-icon">☀️</div>
+          <div class="small-temperature">7º|12º</div>
+        </div>
+        <div class="col">
+          THU
+          <div class="weather-icon">🌤</div>
+          <div class="small-temperature">7º|12º</div>
+        </div>
+        <div class="col">
+          FRI
+          <div class="weather-icon">🌥</div>
+          <div class="small-temperature">7º|12º</div>
+        </div>
+        <div class="col">
+          SAT
+          <div class="weather-icon">☀️</div>
+          <div class="small-temperature">7º|12º</div>
+        </div>
+      </div>
+    </div>
+    <script src="src/index.js"></script>
+  </body>
+</html>
