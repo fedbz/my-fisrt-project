@@ -78,6 +78,8 @@ function showTemperature(response) {
   mainCity.innerHTML = locationName;
   temperature.innerHTML = tempNumber;
 
+  displayIcon(response);
+
   return temperature;
 }
 
@@ -95,3 +97,11 @@ function getPosition() {
 
 let button = document.querySelector("#button_current_location");
 button.addEventListener("click", getPosition);
+
+function displayIcon(response) {
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+}
