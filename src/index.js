@@ -6,35 +6,92 @@ function addZero(i) {
   return i;
 }
 
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = days[date.getDay()];
+
+  let months = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+  ];
+  let month = months[date.getMonth()];
+  let numDay = date.getDate();
+  let year = date.getFullYear();
+  let h = addZero(date.getHours());
+  let minutes = addZero(date.getMinutes());
+
+  return `${day} ${numDay}/${month}/${year}<br> ${h}:${minutes}`;
+}
+
 let today = new Date();
-let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-let day = days[today.getDay()];
-
-let months = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12"
-];
-let month = months[today.getMonth()];
-let date = today.getDate();
-let year = today.getFullYear();
-let h = addZero(today.getHours());
-let minutes = addZero(today.getMinutes());
-
 let dateElement = document.querySelector("#date_time");
-dateElement.innerHTML = `${day} ${date}/${month}/${year}<br> ${h}:${minutes}`;
+dateElement.innerHTML = formatDate(today);
+
+function formatHours(timestamps) {
+  // Function to add a leading zero in the hours
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  }
+  let date = new Date(timestamps);
+  let h = addZero(date.getHours());
+  let minutes = addZero(date.getMinutes());
+
+  return `${h}:${minutes}`;
+}
 
 let form = document.querySelector("#location_form");
 form.addEventListener("submit", search);
+
+function displayForecast(response) {
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML = null;
+  let forecast = null;
+
+  for (let index = 0; index < 6; index++) {
+    forecast = response.data.list[index];
+    forecastElement.innerHTML += `
+ 
+
+  <div class="col">
+          ${formatHours(forecast.dt * 1000)}
+         <img src ="http://openweathermap.org/img/wn/${
+           forecast.weather[0].icon
+         }@2x.png"
+         alt=""/>
+          <div class="small-temperature">${Math.round(
+            forecast.main.temp_max
+          )}º | ${Math.round(forecast.main.temp_min)}º</div>
+        </div>
+  `;
+  }
+}
+
+function defaultCity() {
+  let location = "Rome";
+  let mainCity = document.querySelector("#city");
+  mainCity.innerHTML = location;
+  let apiKey = "3b5a0f5b92d32dc7cafcc0e735ca8c5b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=${apiKey}`;
+  axios.get(apiUrl).then(showTemperature);
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&APPID=${apiKey}`;
+  axios.get(apiUrl).then(displayForecast);
+}
+defaultCity();
 
 function search(event) {
   event.preventDefault();
@@ -44,6 +101,9 @@ function search(event) {
   let apiKey = "3b5a0f5b92d32dc7cafcc0e735ca8c5b";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=${apiKey}`;
   axios.get(apiUrl).then(showTemperature);
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&APPID=${apiKey}`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 let searchIcon = document.querySelector("#magnifying_glass");
@@ -70,7 +130,6 @@ function displayF() {
 }
 
 function showTemperature(response) {
-  console.log(response.data);
   let tempNumber = Math.round(response.data.main.temp);
   let locationName = response.data.name;
   let mainCity = document.querySelector("#city");
@@ -94,6 +153,9 @@ function showPosition(position) {
   let key = "3b5a0f5b92d32dc7cafcc0e735ca8c5b";
   let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${key}`;
   axios.get(url).then(showTemperature);
+
+  apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&APPID=${key}`;
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function getPosition() {
