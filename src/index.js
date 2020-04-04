@@ -26,12 +26,12 @@ function formatDate(timestamp) {
     "12"
   ];
   let month = months[date.getMonth()];
-  let numDay = date.getDate();
+  let numDay = addZero(date.getDate());
   let year = date.getFullYear();
   let h = addZero(date.getHours());
   let minutes = addZero(date.getMinutes());
 
-  return `${day} ${numDay}/${month}/${year}<br> ${h}:${minutes}`;
+  return `${day} ${numDay}/${month}/${year}<br> Last updated: ${h}:${minutes}`;
 }
 
 let today = new Date();
@@ -134,9 +134,10 @@ function showTemperature(response) {
   let locationName = response.data.name;
   let mainCity = document.querySelector("#city");
   let temperature = document.querySelector("#temp-digit");
+  let descriptionElement = document.querySelector("#description");
   mainCity.innerHTML = locationName;
   temperature.innerHTML = tempNumber;
-
+  descriptionElement.innerHTML = response.data.weather[0].description;
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   humidityElement.innerHTML = Math.round(response.data.main.humidity);

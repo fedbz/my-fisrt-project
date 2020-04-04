@@ -30,3 +30,6 @@ hr {
 .credits {
   text-align: center;
 }
+#description:first-letter {
+  text-transform: capitalize;
+}
